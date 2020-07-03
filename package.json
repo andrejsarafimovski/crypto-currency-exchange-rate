@@ -41,5 +41,33 @@
         "nyc": "^15.1.0",
         "tslint": "^6.1.2",
         "typescript": "^3.9.6"
+    },
+    "nyc": {
+      "check-coverage": true,
+      "lines": 90,
+      "statements": 90,
+      "functions": 90,
+      "exclude": [
+        "**/test",
+        "**/sdk"
+      ],
+      "watermarks": {
+        "branches": [
+          50,
+          100
+        ],
+        "lines": [
+          90,
+          100
+        ],
+        "functions": [
+          90,
+          100
+        ],
+        "statements": [
+          90,
+          100
+        ]
+      }
     }
 }

@@ -8,3 +8,5 @@
 10 minutes - writing down API documentation in a Swagger definition
 30 minutes - refactoring project structure, added validation by schema on API
 30 minutes - test setup, added mocks, test data from integrations, generating SDK from swagger
+
+40 minutes - added integration tests

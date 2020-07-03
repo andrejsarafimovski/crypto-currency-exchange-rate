@@ -23,10 +23,11 @@ app.get("/exchange-rate",
             ));
         } catch (err) {
             console.error(JSON.stringify(err));
-            return res.send(
-                err.code && err.message ?
-                    err : codedError(HTTP.INTERNAL_SERVER_ERROR, "Internal Server Error")
-            );
+            if (err.code && err.message) {
+                return res.status(err.code).send(err);
+            }
+            return res.status(HTTP.INTERNAL_SERVER_ERROR)
+                .send(codedError(HTTP.INTERNAL_SERVER_ERROR, "Internal Server Error"));
         }
     }
 );
@@ -39,4 +40,6 @@ export async function startServer() {
     });
 }
 
-startServer();
+if (process.env.NODE_ENV !== "test") {
+    startServer();
+}
