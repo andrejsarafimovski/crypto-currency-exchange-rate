@@ -15,15 +15,16 @@ const {
 
 /* istanbul ignore if */ // won't test the throw
 if (
-    currencyLayerAccessKey
+    !currencyLayerAccessKey
 ) {
     throw new Error("Fatal Error: missing required configurations in environment");
 }
-
+// parseInt(undefined) returns NaN which is falsy
 export const config = {
     PORT: parseInt(PORT!) || 80,
     integrations: {
         currencyLayer: { accessKey: currencyLayerAccessKey }
     },
-    updateExchangeRateInterval: parseInt(updateExchangeRateInterval!) || 1
+    // exchange rate interval is in minutes
+    updateExchangeRateInterval: parseInt(updateExchangeRateInterval!) || 15
 };

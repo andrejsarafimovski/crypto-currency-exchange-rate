@@ -31,7 +31,7 @@ app.get("/exchange-rate",
     }
 );
 
-async function startServer() {
+export async function startServer() {
     await Exchange.updateExchangeRates();
     setInterval(Exchange.updateExchangeRates, config.updateExchangeRateInterval * MILLISECONDS_IN_A_MINUTE);
     app.listen(config.PORT, () => {
