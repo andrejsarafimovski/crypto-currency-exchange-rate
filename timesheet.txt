@@ -11,6 +11,6 @@
 30 minutes - test setup, added mocks, test data from integrations, generating SDK from swagger
 40 minutes - added integration tests
 
-60 minutes - eslint, fixing warnings/errors
+40 minutes - eslint, fixing warnings/errors
 
 Approximately 5 hours
