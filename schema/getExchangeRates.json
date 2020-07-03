@@ -1,0 +1,33 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "schema://getExchangeRates.json",
+    "title": "getExchangeRates",
+    "operationId": "getExchangeRates",
+    "description": "Get Exchange Rates",
+    "type": "object",
+    "properties": {
+        "cryptoCurrencyCode": {
+            "type": "string",
+            "description": "3-letter crypto currency code",
+            "pattern": "^[A-Za-z]{3}$"
+        },
+        "flatCurrencyCode": {
+            "type": "string",
+            "description": "3-letter flat currency code",
+            "pattern": "^[A-Za-z]{3}$"
+        },
+        "manualResync": {
+            "type": "string",
+            "description": "A flag to force a manual resync of exchange rates",
+            "enum": [
+                "true",
+                "false"
+            ]
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "cryptoCurrencyCode",
+        "flatCurrencyCode"
+    ]
+}

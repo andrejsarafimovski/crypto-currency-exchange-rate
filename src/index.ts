@@ -1,14 +1,16 @@
 import express from "express";
+import HTTP from "http-status-codes";
 import { config } from "./config";
+import { codedError, validation } from "./lib";
 import { Exchange } from "./models/exchange-model";
+import { Dictionary } from "./types";
+
 
 const app = express();
-interface Dictionary<T> {
-    [key: string]: T;
-}
 const MILLISECONDS_IN_A_MINUTE = 60000;
 
 app.get("/exchange-rate",
+    validation("getExchangeRates"),
     async (req, res) => {
         try {
             const { cryptoCurrencyCode, flatCurrencyCode, manualResync } = req.query as Dictionary<string>;
@@ -21,7 +23,10 @@ app.get("/exchange-rate",
             ));
         } catch (err) {
             console.error(JSON.stringify(err));
-            return res.send(err);
+            return res.send(
+                err.code && err.message ?
+                    err : codedError(HTTP.INTERNAL_SERVER_ERROR, "Internal Server Error")
+            );
         }
     }
 );

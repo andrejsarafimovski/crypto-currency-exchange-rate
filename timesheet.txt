@@ -4,3 +4,4 @@
 30 minutes - coding integration interfaces for Coin Gecko and Currency Layer
 10 minutes - business logic for the API, Exchange Model
 10 minutes - writing down API documentation in a Swagger definition
+30 minutes - refactoring project structure, added validation by schema on API

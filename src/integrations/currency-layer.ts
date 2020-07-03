@@ -1,13 +1,9 @@
 import HTTP from "http-status-codes";
 import request from "node-fetch";
 import { config } from "../config";
+import { codedError } from "../lib";
+import { ExchangeRates } from "../types";
 
-interface ExchangeRates {
-    [key: string]: {
-        name: string;
-        rate: number;
-    };
-}
 
 const CURRENCY_CODE_LENGTH = 3;
 
@@ -24,29 +20,35 @@ export class CurrencyLayer {
     };
 
     public static async updateExchangeRates() {
-        const queryParams = new URLSearchParams();
-        queryParams.append("access_key", this.accessKey);
-        queryParams.append("currencies", Object.keys(this.exchangeRates).join(","));
-
         console.log("Updating Flat Currency Rates");
-        const response = await request(
-            `${this.endpoint}/live?${queryParams.toString()}`,
-            { method: "GET" }
-        ).then(res => res.json()) as CurrencyLayerResponses.Live;
+        try {
+            const queryParams = new URLSearchParams();
+            queryParams.append("access_key", this.accessKey);
+            queryParams.append("currencies", Object.keys(this.exchangeRates).join(","));
 
-        Object.keys(response.quotes).forEach(key => {
-            const currencyCode = key.substring(CURRENCY_CODE_LENGTH);
-            if (this.exchangeRates[currencyCode]) {
-                this.exchangeRates[currencyCode].rate = response.quotes[key];
-            }
-        });
-        console.log("Updated Flat Currency Rates");
+            const response = await request(
+                `${this.endpoint}/live?${queryParams.toString()}`,
+                { method: "GET" }
+            ).then(res => res.json()) as CurrencyLayerResponses.Live;
+
+            Object.keys(response.quotes).forEach(key => {
+                const currencyCode = key.substring(CURRENCY_CODE_LENGTH);
+                if (this.exchangeRates[currencyCode]) {
+                    this.exchangeRates[currencyCode].rate = response.quotes[key];
+                }
+            });
+            console.log("Updated Flat Currency Rates");
+        } catch (err) {
+            const errorMessage = "Couldn't Update Flat Currency Rates";
+            console.error(errorMessage);
+            throw codedError(HTTP.INTERNAL_SERVER_ERROR, errorMessage);
+        }
     }
 
     public getExchangeRate(flatCurrencyCode: string) {
         const currency = CurrencyLayer.exchangeRates[flatCurrencyCode];
         if (!currency) {
-            throw { code: HTTP.BAD_REQUEST, message: `Unsupported flat currency code: ${flatCurrencyCode}` };
+            throw codedError(HTTP.BAD_REQUEST, `Unsupported flat currency code: ${flatCurrencyCode}`);
         }
         return currency.rate;
     }

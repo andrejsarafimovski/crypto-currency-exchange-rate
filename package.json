@@ -17,6 +17,7 @@
         "mocha": "./node_modules/.bin/nyc --extension=.ts --reporter=lcov --reporter=text-summary ./node_modules/.bin/mocha --recursive ./dst/test --bail --sort --timeout 10000"
     },
     "dependencies": {
+        "ajv": "^6.12.2",
         "express": "^4.17.1",
         "http-status-codes": "^1.4.0",
         "node-fetch": "^2.6.0"
