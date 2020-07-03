@@ -1,0 +1,31 @@
+{
+    "name": "crypto-currency-exchange-rate",
+    "version": "1.0.0",
+    "description": "API for current exchange rate of crypto currencies to flat currencies",
+    "main": "dst/index.js",
+    "author": "andrejsarafimovski@gmail.com",
+    "license": "ISC",
+    "scripts": {
+        "prestart": "npm run build",
+        "start": "node dst/index.js",
+        "prebuild": "rm -rf ./dst",
+        "build": "./node_modules/.bin/tsc --p .",
+        "postbuild": "npm run lint",
+        "pretest": "npm run build",
+        "test": "npm run mocha",
+        "lint": "./node_modules/.bin/tslint -p ./tsconfig.json -c ./tslint.json --fix",
+        "mocha": "./node_modules/.bin/nyc --extension=.ts --reporter=lcov --reporter=text-summary ./node_modules/.bin/mocha --recursive ./dst/test --bail --sort --timeout 10000"
+    },
+    "dependencies": {
+        "express": "^4.17.1",
+        "http-status-codes": "^1.4.0",
+        "node-fetch": "^2.6.0"
+    },
+    "devDependencies": {
+        "@luckbox/eslint-rules": "^3.0.1",
+        "@types/express": "^4.17.6",
+        "@types/node-fetch": "^2.5.7",
+        "tslint": "^6.1.2",
+        "typescript": "^3.9.6"
+    }
+}

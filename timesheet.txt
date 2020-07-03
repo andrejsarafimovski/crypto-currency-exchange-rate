@@ -1,0 +1,6 @@
+40 minutes - reading documentation regarding Coin Gecko and Currency Layer
+20 minutes - setting up github repo, node project, typescript
+20 minutes - adding express, setting up project structure
+30 minutes - coding integration interfaces for Coin Gecko and Currency Layer
+10 minutes - business logic for the API, Exchange Model
+10 minutes - writing down API documentation in a Swagger definition

@@ -1,0 +1,113 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "description": "API for Crypto Currency Exchange Rate",
+        "version": "1.0.0",
+        "title": "Crypto Currency Exchange Rate"
+    },
+    "paths": {
+        "/exchange-rate": {
+            "get": {
+                "summary": "Get Exchange Rate of a crypto currency to a flat currency",
+                "operationId": "getExchangeRate",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "cryptoCurrencyCode",
+                        "schema": {
+                            "type": "string",
+                            "description": "3-letter crypto currency code",
+                            "pattern": "^[A-Za-z]{3}$"
+                        },
+                        "required": true
+                    },
+                    {
+                        "in": "query",
+                        "name": "flatCurrencyCode",
+                        "schema": {
+                            "type": "string",
+                            "description": "3-letter flat currency code",
+                            "pattern": "^[A-Za-z]{3}$"
+                        },
+                        "required": true
+                    },
+                    {
+                        "in": "query",
+                        "name": "manualResync",
+                        "schema": {
+                            "type": "boolean",
+                            "description": "A flag to force a manual resync of exchange rates"
+                        },
+                        "required": false
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get All Records Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "cryptoCurrencyCode": {
+                                            "type": "string",
+                                            "description": "3-letter crypto currency code"
+                                        },
+                                        "flatCurrencyCode": {
+                                            "type": "string",
+                                            "description": "3-letter flat currency code"
+                                        },
+                                        "exchangeRate": {
+                                            "type": "number",
+                                            "description": "The exchange rate from crypto to flat currency"
+                                        },
+                                        "lastUpdate": {
+                                            "type": "number",
+                                            "description": "Timestamp of the last resync of exchange rates"
+                                        }
+                                    },
+                                    "required": [
+                                        "cryptoCurrencyCode",
+                                        "flatCurrencyCode",
+                                        "exchangeRate",
+                                        "lastUpdate"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "code": {
+                                            "type": "number",
+                                            "description": "Status code of the response"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "description": "Error message"
+                                        }
+                                    },
+                                    "required": [
+                                        "code",
+                                        "message"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "General server error"
+                    }
+                },
+                "tags": [
+                    "crypto-currency-exchange-rate"
+                ]
+            }
+        }
+    }
+}
