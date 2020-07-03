@@ -26,8 +26,7 @@ npm run lint
 ## About
 Exposes an API for getting Exchange Rates between Crypto and Flat Currencies
 
-## Swagger Definition
-https://petstore.swagger.io/?url=https://raw.githubusercontent.com/MrAndrej20/crypto-currency-exchange-rate/master/swagger.json
+## [Swagger Definition](https://petstore.swagger.io/?url=https://raw.githubusercontent.com/MrAndrej20/crypto-currency-exchange-rate/master/swagger.json)
 
 ## Technology stack
 * Node.js
