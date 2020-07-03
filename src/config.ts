@@ -8,23 +8,23 @@
 // tslint:disable
 
 const {
-    PORT,
-    currencyLayerAccessKey,
-    updateExchangeRateInterval
+  PORT,
+  currencyLayerAccessKey,
+  updateExchangeRateInterval,
 } = process.env;
 
 /* istanbul ignore if */ // won't test the throw
 if (
-    !currencyLayerAccessKey
+  !currencyLayerAccessKey
 ) {
-    throw new Error("Fatal Error: missing required configurations in environment");
+  throw new Error('Fatal Error: missing required configurations in environment');
 }
-// parseInt(undefined) returns NaN which is falsy
+
 export const config = {
-    PORT: parseInt(PORT!) || 80,
-    integrations: {
-        currencyLayer: { accessKey: currencyLayerAccessKey }
-    },
-    // exchange rate interval is in minutes
-    updateExchangeRateInterval: parseInt(updateExchangeRateInterval!) || 15
+  PORT: parseInt(PORT || '') || 80,
+  integrations: {
+    currencyLayer: { accessKey: currencyLayerAccessKey },
+  },
+  // exchange rate interval is in minutes
+  updateExchangeRateInterval: parseInt(updateExchangeRateInterval || '') || 15,
 };

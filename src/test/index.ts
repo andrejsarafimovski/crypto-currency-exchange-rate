@@ -5,14 +5,14 @@ process.env.currencyLayerAccessKey = "currencyLayerAccessKeyTest";
 import "./mocks/node-fetch";
 
 // tslint:disable
-import { startServer } from "../";
+import { startServer } from '../';
 
 before(async () => {
-    console.info("BEFORE");
-    await startServer();
+  console.info('BEFORE');
+  await startServer();
 });
 
 after(() => {
-    console.info("AFTER");
-    process.exit(0);
+  console.info('AFTER');
+  process.exit(0);
 });

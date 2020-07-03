@@ -1,28 +1,34 @@
-import { CoinGecko, CurrencyLayer } from "../integrations";
+import { CoinGecko, CurrencyLayer } from '../integrations';
 
 export class Exchange {
-    private readonly coinGecko = new CoinGecko();
-    private readonly currencyLayer = new CurrencyLayer();
-    private static lastUpdated: number = 0;
+  private readonly coinGecko = new CoinGecko();
 
-    public static async updateExchangeRates() {
-        console.log("Updating Rates");
-        await Promise.all([
-            CoinGecko.updateExchangeRates(),
-            CurrencyLayer.updateExchangeRates()
-        ]);
-        this.lastUpdated = Date.now();
-        console.log("Updated Rates");
-    }
+  private readonly currencyLayer = new CurrencyLayer();
 
-    public getExchangeRate(cryptoCurrencyCode: string, flatCurrencyCode: string) {
-        const cryptoExchangeRate = this.coinGecko.getExchangeRate(cryptoCurrencyCode);
-        const flatExchangeRate = this.currencyLayer.getExchangeRate(flatCurrencyCode);
-        return {
-            cryptoCurrencyCode,
-            flatCurrencyCode,
-            exchangeRate: cryptoExchangeRate * flatExchangeRate,
-            lastUpdate: Exchange.lastUpdated
-        };
-    }
+  private static lastUpdated = 0;
+
+  public static async updateExchangeRates(): Promise<void> {
+    await Promise.all([
+      CoinGecko.updateExchangeRates(),
+      CurrencyLayer.updateExchangeRates(),
+    ]);
+    this.lastUpdated = Date.now();
+    return;
+  }
+
+  public getExchangeRate(cryptoCurrencyCode: string, flatCurrencyCode: string): {
+    cryptoCurrencyCode: string;
+    flatCurrencyCode: string;
+    exchangeRate: number;
+    lastUpdate: number;
+  } {
+    const cryptoExchangeRate = this.coinGecko.getExchangeRate(cryptoCurrencyCode);
+    const flatExchangeRate = this.currencyLayer.getExchangeRate(flatCurrencyCode);
+    return {
+      cryptoCurrencyCode,
+      flatCurrencyCode,
+      exchangeRate: cryptoExchangeRate * flatExchangeRate,
+      lastUpdate: Exchange.lastUpdated,
+    };
+  }
 }

@@ -10,15 +10,16 @@
         "start": "node dst/index.js",
         "prebuild": "rm -rf ./dst",
         "build": "./node_modules/.bin/tsc --p .",
-        "postbuild": "npm run lint",
+        "postbuild": "npm run eslint",
         "pretest": "npm run build",
         "test": "npm run mocha",
-        "lint": "./node_modules/.bin/tslint -p ./tsconfig.json -c ./tslint.json --fix",
+        "tslint": "./node_modules/.bin/tslint -p ./tsconfig.json -c ./tslint.json --fix",
         "mocha": "./node_modules/.bin/nyc --extension=.ts --reporter=lcov --reporter=text-summary ./node_modules/.bin/mocha --recursive ./dst/test --bail --sort --timeout 10000",
         "generate-sdk": "npm run generate-axios-api",
         "postgenerate-sdk": "rm -rf src/sdk/**/.openapi-generator src/sdk/**/.gitignore src/sdk/**/*.sh src/sdk/**/.openapi-generator-ignore src/sdk/**/*-e src/sdk/**/.npmignore",
         "pregenerate-sdk": "rm -rf src/sdk/axios",
-        "generate-axios-api": "openapi-generator generate -i swagger.json -g typescript-axios -o src/sdk/axios"
+        "generate-axios-api": "openapi-generator generate -i swagger.json -g typescript-axios -o src/sdk/axios",
+        "eslint": "./node_modules/.bin/eslint -c ./node_modules/\\@luckbox/eslint-rules/typescript/backend.js src --fix"
     },
     "dependencies": {
         "ajv": "^6.12.2",
@@ -34,8 +35,12 @@
         "@types/mocha": "^7.0.2",
         "@types/mock-require": "^2.0.0",
         "@types/node-fetch": "^2.5.7",
+        "@typescript-eslint/eslint-plugin": "^3.5.0",
+        "@typescript-eslint/parser": "^3.5.0",
         "axios": "^0.19.2",
         "chai": "^4.2.0",
+        "eslint": "^7.3.1",
+        "eslint-plugin-node": "^11.1.0",
         "mocha": "^8.0.1",
         "mock-require": "^3.0.3",
         "nyc": "^15.1.0",
@@ -43,31 +48,31 @@
         "typescript": "^3.9.6"
     },
     "nyc": {
-      "check-coverage": true,
-      "lines": 90,
-      "statements": 90,
-      "functions": 90,
-      "exclude": [
-        "**/test",
-        "**/sdk"
-      ],
-      "watermarks": {
-        "branches": [
-          50,
-          100
+        "check-coverage": true,
+        "lines": 90,
+        "statements": 90,
+        "functions": 90,
+        "exclude": [
+            "**/test",
+            "**/sdk"
         ],
-        "lines": [
-          90,
-          100
-        ],
-        "functions": [
-          90,
-          100
-        ],
-        "statements": [
-          90,
-          100
-        ]
-      }
+        "watermarks": {
+            "branches": [
+                50,
+                100
+            ],
+            "lines": [
+                90,
+                100
+            ],
+            "functions": [
+                90,
+                100
+            ],
+            "statements": [
+                90,
+                100
+            ]
+        }
     }
 }

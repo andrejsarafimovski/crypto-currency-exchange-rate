@@ -1,47 +1,47 @@
-import HTTP from "http-status-codes";
-import request from "node-fetch";
-import { codedError } from "../lib";
-import { ExchangeRates } from "../types";
+import HTTP from 'http-status-codes';
+import request from 'node-fetch';
+import { codedError } from '../lib';
+import { ExchangeRates } from '../types';
 
 export class CoinGecko {
-    private static readonly endpoint = "https://api.coingecko.com/api/v3";
+    private static readonly endpoint = 'https://api.coingecko.com/api/v3';
 
     private static exchangeRates: ExchangeRates = {};
 
-    public static async updateExchangeRates() {
-        console.log("Updating Crypto Currency Rates");
-        try {
-            const queryParams = new URLSearchParams();
-            queryParams.append("vs_currency", "usd");
-            queryParams.append("per_page", "15");
+    public static async updateExchangeRates():Promise<void> {
+      try {
+        // eslint-disable-next-line
+        const queryParams = new URLSearchParams();
+        queryParams.append('vs_currency', 'usd');
+        queryParams.append('per_page', '15');
 
-            const response = await request(
-                `${this.endpoint}/coins/markets?${queryParams.toString()}`,
-                { method: "GET" }
-            ).then(res => res.json()) as CoinGeckoResponses.CoinsMarkets;
+        const response = await request(
+          `${this.endpoint}/coins/markets?${queryParams.toString()}`,
+          { method: 'GET' },
+        ).then((res) => res.json()) as CoinGeckoResponses.CoinsMarkets;
 
-            this.exchangeRates = response.reduce((acc, coin) => ({
-                ...acc,
-                [coin.symbol]: { name: coin.name, rate: coin.current_price }
-            }), {});
-            console.log("Updated Crypto Currency Rates");
-        } catch (err) {
-            const errorMessage = "Couldn't Update Crypto Currency Rates";
-            console.error(errorMessage);
-            throw codedError(HTTP.INTERNAL_SERVER_ERROR, errorMessage);
-        }
+        this.exchangeRates = response.reduce((acc, coin) => ({
+          ...acc,
+          [coin.symbol]: { name: coin.name, rate: coin.current_price },
+        }), {});
+        return;
+      } catch (err) {
+        const errorMessage = "Couldn't Update Crypto Currency Rates";
+        throw codedError(HTTP.INTERNAL_SERVER_ERROR, errorMessage);
+      }
     }
 
-    public getExchangeRate(cryptoCurrencyCode: string) {
-        const currency = CoinGecko.exchangeRates[cryptoCurrencyCode];
-        if (!currency) {
-            throw codedError(HTTP.BAD_REQUEST, `Unsupported crypto currency code: ${cryptoCurrencyCode}`);
-        }
-        return currency.rate;
+    public getExchangeRate(cryptoCurrencyCode: string):number {
+      const currency = CoinGecko.exchangeRates[cryptoCurrencyCode];
+      if (!currency) {
+        throw codedError(HTTP.BAD_REQUEST, `Unsupported crypto currency code: ${cryptoCurrencyCode}`);
+      }
+      return currency.rate;
     }
 
 }
 
+// eslint-disable-next-line
 namespace CoinGeckoResponses {
     export type CoinsMarkets = CoinsMarketsCoinMetadata[];
     interface CoinsMarketsCoinMetadata {
@@ -50,9 +50,7 @@ namespace CoinGeckoResponses {
         name: string;
         image: string;
         current_price: number;
-        market_cap: any;
         market_cap_rank: number;
-        total_volume: any;
         high_24h: number;
         low_24h: number;
         price_change_24h: number;

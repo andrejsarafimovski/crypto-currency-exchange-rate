@@ -1,2 +1,2 @@
-export * from "./coin-gecko";
-export * from "./currency-layer";
+export * from './coin-gecko';
+export * from './currency-layer';
