@@ -9,9 +9,8 @@
 30 minutes - refactoring project structure, added validation by schema on API
 
 30 minutes - test setup, added mocks, test data from integrations, generating SDK from swagger
-
 40 minutes - added integration tests
 
 60 minutes - eslint, fixing warnings/errors
 
-Approximately 4 hours and 30 minutes
+Approximately 5 hours
