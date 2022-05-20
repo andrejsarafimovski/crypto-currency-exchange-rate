@@ -10,7 +10,6 @@
         "start": "node dst/index.js",
         "prebuild": "rm -rf ./dst",
         "build": "./node_modules/.bin/tsc --p .",
-        "postbuild": "npm run eslint",
         "pretest": "npm run build",
         "test": "npm run mocha",
         "tslint": "./node_modules/.bin/tslint -p ./tsconfig.json -c ./tslint.json --fix",
