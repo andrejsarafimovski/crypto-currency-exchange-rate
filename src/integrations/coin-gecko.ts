@@ -26,6 +26,8 @@ export class CoinGecko {
         }), {});
         return;
       } catch (err) {
+        console.error("CoinGecko error");
+        console.error(err);
         const errorMessage = "Couldn't Update Crypto Currency Rates";
         throw codedError(HTTP.INTERNAL_SERVER_ERROR, errorMessage);
       }

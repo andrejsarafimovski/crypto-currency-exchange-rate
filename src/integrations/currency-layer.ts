@@ -40,6 +40,8 @@ export class CurrencyLayer {
         });
         return;
       } catch (err) {
+        console.error("CurrencyLayer error");
+        console.error(err);
         const errorMessage = "Couldn't Update Flat Currency Rates";
         throw codedError(HTTP.INTERNAL_SERVER_ERROR, errorMessage);
       }
