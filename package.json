@@ -24,7 +24,7 @@
         "ajv": "^6.12.2",
         "express": "^4.17.1",
         "http-status-codes": "^1.4.0",
-        "node-fetch": "^2.6.0"
+        "node-fetch": "^2.6.7"
     },
     "devDependencies": {
         "@luckbox/eslint-rules": "^3.0.1",
