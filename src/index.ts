@@ -31,11 +31,16 @@ app.get('/exchange-rate',
   },
 );
 
-export async function startServer():Promise<void> {
-  await Exchange.updateExchangeRates();
-  setInterval(Exchange.updateExchangeRates, config.updateExchangeRateInterval * MILLISECONDS_IN_A_MINUTE);
-  app.listen(config.PORT);
-  return;
+export async function startServer(): Promise<void> {
+  try {
+    await Exchange.updateExchangeRates();
+    setInterval(Exchange.updateExchangeRates, config.updateExchangeRateInterval * MILLISECONDS_IN_A_MINUTE);
+    app.listen(config.PORT);
+    return;
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
 }
 
 if (process.env.NODE_ENV !== 'test') {
