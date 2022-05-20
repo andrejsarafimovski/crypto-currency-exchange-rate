@@ -10,6 +10,7 @@ RUN npm install
 COPY tsconfig.json tsconfig.json
 COPY src src
 
+RUN npm run generate-sdk
 RUN npm run build
 
 RUN  chown -R node:node /app
