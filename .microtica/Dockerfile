@@ -13,8 +13,4 @@ COPY schema schema
 
 RUN npm run build
 
-RUN  chown -R node:node /app
-ENV  HOME /home/node
-USER node
-
 CMD ["node", "dst/index.js"]
