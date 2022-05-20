@@ -21,7 +21,7 @@
         "eslint": "./node_modules/.bin/eslint -c ./node_modules/\\@luckbox/eslint-rules/typescript/backend.js src --fix"
     },
     "dependencies": {
-        "ajv": "^6.12.2",
+        "ajv": "^6.12.3",
         "express": "^4.17.1",
         "http-status-codes": "^1.4.0",
         "node-fetch": "^2.6.0"
