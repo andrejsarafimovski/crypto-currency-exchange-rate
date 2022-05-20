@@ -31,7 +31,8 @@ export class CurrencyLayer {
           `${this.endpoint}/live?${queryParams.toString()}`,
           { method: 'GET' },
         ).then((res) => res.json()) as CurrencyLayerResponses.Live;
-
+        console.log("Currency Layer response");
+        console.log( response);
         Object.keys(response.quotes).forEach((key) => {
           const currencyCode = key.substring(CURRENCY_CODE_LENGTH);
           if (this.exchangeRates[currencyCode]) {
